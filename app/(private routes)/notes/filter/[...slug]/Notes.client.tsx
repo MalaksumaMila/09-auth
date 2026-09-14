@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { useDebouncedCallback } from 'use-debounce';
 
-import { fetchNotes } from '@/lib/api';
+import { fetchNotes } from '@/lib/api/api';
 
 import css from './NotesPage.module.css';
 import Link from 'next/link';
@@ -43,7 +43,7 @@ export default function NotesClient({ tag }: NotesClientProps) {
           <Pagination page={page} setPage={setPage} pageCount={pageCount} />
         )}
 
-        <Link href='/notes/action/create' className={css.button}>
+        <Link href="/notes/action/create" className={css.button}>
           Create note +
         </Link>
       </header>
@@ -52,7 +52,6 @@ export default function NotesClient({ tag }: NotesClientProps) {
       {isSuccess && !isLoading && data.notes.length > 0 && (
         <NoteList notes={data.notes} />
       )}
-
     </div>
   );
 }
