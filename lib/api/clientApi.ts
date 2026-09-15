@@ -1,7 +1,22 @@
+'use client';
+
+import { User } from '@/types/user';
 import { nextServer } from './api';
 import type { CreateNoteRequest, fetchNotesResponse, Note } from '@/types/note';
 
 const CLIENT_TOKEN = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN;
+
+interface RegisterParam {
+  email: string;
+  password: string;
+}
+
+export async function register(data: RegisterParam): Promise<User> {
+  const res = await nextServer.post<User>('/auth/register', data, {
+    withCredentials: true,
+  });
+  return res.data;
+}
 
 export async function fetchNotes(
   query: string,
