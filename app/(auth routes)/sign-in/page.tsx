@@ -5,10 +5,12 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ErrorResponse, login, LoginParam } from '@/lib/api/clientApi';
 import { AxiosError } from 'axios';
+import useAuthStore from '@/lib/store/authStore';
 
 export default function SignInPage() {
   const router = useRouter();
   const [error, setError] = useState('');
+  const setUser = useAuthStore(state => state.setUser);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -24,8 +26,8 @@ export default function SignInPage() {
         password,
       };
 
-      await login(formValues);
-
+      const user = await login(formValues);
+      setUser(user);
       router.push('/profile');
     } catch (error) {
       setError(
