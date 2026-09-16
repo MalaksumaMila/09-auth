@@ -6,15 +6,17 @@ import type { CreateNoteRequest, fetchNotesResponse, Note } from '@/types/note';
 
 const CLIENT_TOKEN = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN;
 
-interface RegisterParam {
+export interface RegisterParam {
   email: string;
   password: string;
 }
 
+export interface ErrorResponse {
+  message: string;
+}
+
 export async function register(data: RegisterParam): Promise<User> {
-  const res = await nextServer.post<User>('/auth/register', data, {
-    withCredentials: true,
-  });
+  const res = await nextServer.post<User>('/auth/register', data, {});
   return res.data;
 }
 
