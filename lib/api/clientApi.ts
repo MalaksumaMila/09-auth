@@ -11,12 +11,22 @@ export interface RegisterParam {
   password: string;
 }
 
+export interface LoginParam {
+  email: string;
+  password: string;
+}
+
 export interface ErrorResponse {
   message: string;
 }
 
 export async function register(data: RegisterParam): Promise<User> {
-  const res = await nextServer.post<User>('/auth/register', data, {});
+  const res = await nextServer.post<User>('/auth/register', data);
+  return res.data;
+}
+
+export async function login(data: LoginParam): Promise<User> {
+  const res = await nextServer.post<User>('/auth/login', data);
   return res.data;
 }
 
