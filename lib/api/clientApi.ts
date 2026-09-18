@@ -20,6 +20,10 @@ export interface ErrorResponse {
   message: string;
 }
 
+export interface CheckSessionRequest {
+  success: boolean;
+}
+
 export async function register(data: RegisterParam): Promise<User> {
   const res = await nextServer.post<User>('/auth/register', data);
   return res.data;
@@ -29,6 +33,37 @@ export async function login(data: LoginParam): Promise<User> {
   const res = await nextServer.post<User>('/auth/login', data);
   return res.data;
 }
+
+export async function checkSession() {
+  const res = await nextServer.get<CheckSessionRequest>('/auth/session');
+  return res.data.success;
+}
+
+export async function getMe(): Promise<User> {
+  const { data } = await nextServer.get<User>('/auth/me');
+  return data;
+}
+
+export const logout = async (): Promise<void> => {
+  await nextServer.post('/auth/logout');
+};
+
+export type UpdateUserRequest = {
+  userName?: string;
+  avatar?: string;
+};
+
+export const updateMe = async (payload: UpdateUserRequest) => {
+  const res = await nextServer.put<User>('/auth/me', payload);
+  return res.data;
+};
+
+export const uploadImage = async (file: File): Promise<string> => {
+  const formData = new FormData();
+  formData.append('file', file);
+  const { data } = await nextServer.post('/upload', formData);
+  return data.url;
+};
 
 export async function fetchNotes(
   query: string,

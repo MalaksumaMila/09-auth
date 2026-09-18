@@ -5,10 +5,12 @@ import { ErrorResponse, register, RegisterParam } from '@/lib/api/clientApi';
 import { AxiosError } from 'axios';
 
 import css from './SignUpPage.module.css';
+import useAuthStore from '@/lib/store/authStore';
 
 export default function SignUpPage() {
   const router = useRouter();
   const [error, setError] = useState('');
+  const setUser = useAuthStore(state => state.setUser);
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -22,8 +24,13 @@ export default function SignUpPage() {
         email,
         password,
       };
-      await register(formValues);
-      router.push('/profile');
+      const res = await register(formValues);
+      if (res) {
+        setUser(res);
+        router.push('/profile');
+      } else {
+        setError('Invalid email or password');
+      }
     } catch (error) {
       setError(
         (error as AxiosError<ErrorResponse>).response?.data?.message ??

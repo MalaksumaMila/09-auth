@@ -11,7 +11,6 @@ export default function SignInPage() {
   const router = useRouter();
   const [error, setError] = useState('');
   const setUser = useAuthStore(state => state.setUser);
-
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
