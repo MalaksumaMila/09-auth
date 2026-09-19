@@ -10,7 +10,7 @@ import Pagination from '@/components/Pagination/Pagination';
 import NoteList from '@/components/NoteList/NoteList';
 import SearchBox from '@/components/SearchBox/SearchBox';
 import Loader from '@/app/loading';
-import { fetchNotes } from '@/lib/api/serverApi';
+import { fetchNotes } from '@/lib/api/clientApi';
 
 interface NotesClientProps {
   tag: string;
