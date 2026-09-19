@@ -4,14 +4,13 @@ import { useState } from 'react';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { useDebouncedCallback } from 'use-debounce';
 
-import { fetchNotes } from '@/lib/api/serverApi';
-
 import css from './NotesPage.module.css';
 import Link from 'next/link';
 import Pagination from '@/components/Pagination/Pagination';
 import NoteList from '@/components/NoteList/NoteList';
 import SearchBox from '@/components/SearchBox/SearchBox';
 import Loader from '@/app/loading';
+import { fetchNotes } from '@/lib/api/serverApi';
 
 interface NotesClientProps {
   tag: string;
