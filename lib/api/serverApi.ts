@@ -21,40 +21,33 @@ export async function fetchNotes(
   const cookieStore = await cookies();
   const cookieHeader = cookieStore.toString();
 
-  try {
-    const response = await nextServer.get<fetchNotesResponse>(`/notes`, {
-      params: {
-        search: query || undefined,
-        page,
-        tag: tag === 'all' ? undefined : tag,
-      },
-      headers: {
-        Cookie: cookieHeader,
-      },
-    });
+  const response = await nextServer.get<fetchNotesResponse>('/notes', {
+    params: {
+      search: query || undefined,
+      page,
+      tag: tag === 'all' ? undefined : tag,
+    },
+    headers: {
+      Cookie: cookieHeader,
+    },
+  });
 
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+  return response.data;
 }
 
 export async function fetchNoteById(id: string): Promise<Note> {
   const cookieStore = await cookies();
   const cookieHeader = cookieStore.toString();
-  try {
-    const response = await nextServer.get<Note>(`/notes/${id}`, {
-      headers: { Cookie: cookieHeader },
-    });
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+
+  const response = await nextServer.get<Note>(`/notes/${id}`, {
+    headers: { Cookie: cookieHeader },
+  });
+  return response.data;
 }
 
 export const getMe = async (): Promise<User> => {
   const cookieStore = await cookies();
-  const { data } = await nextServer.get<User>('/auth/me', {
+  const { data } = await nextServer.get<User>('/users/me', {
     headers: {
       Cookie: cookieStore.toString(),
     },
