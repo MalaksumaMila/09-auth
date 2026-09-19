@@ -40,21 +40,21 @@ export async function checkSession() {
 }
 
 export async function getMe(): Promise<User> {
-  const { data } = await nextServer.get<User>('/auth/me');
+  const { data } = await nextServer.get<User>('/users/me');
   return data;
 }
 
-export const logout = async (): Promise<void> => {
+export async function logout(): Promise<void> {
   await nextServer.post('/auth/logout');
-};
+}
 
 export type UpdateUserRequest = {
-  userName?: string;
+  username?: string;
   avatar?: string;
 };
 
 export const updateMe = async (payload: UpdateUserRequest) => {
-  const res = await nextServer.put<User>('/auth/me', payload);
+  const res = await nextServer.patch<User>('/users/me', payload);
   return res.data;
 };
 

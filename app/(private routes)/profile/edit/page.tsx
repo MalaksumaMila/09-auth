@@ -24,7 +24,7 @@ const EditProfile = () => {
 
   const handleSaveUser = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const updatedUser = await updateMe({ userName });
+    const updatedUser = await updateMe({ username: userName });
     setUser(updatedUser);
     router.push('/profile');
   };
